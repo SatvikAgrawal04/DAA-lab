@@ -20,6 +20,20 @@ void bubbleSort(int arr[], int n)
     }
 }
 
+void selectionSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int k = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] < arr[k])
+                k = j;
+        }
+        swap(&arr[k], &arr[i]);
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     string filename, opfile;
@@ -37,9 +51,19 @@ int main(int argc, char const *argv[])
 
     clock_t start, end;
 
+    cout << "Select sorting methond: " << endl
+         << "1. Bubble Sort" << endl
+         << "2. Selection Sort" << endl;
+    int choice;
+    cin >> choice;
     start = clock();
-
-    bubbleSort(arr, size);
+    switch (choice)
+    {
+    case 1:
+        bubbleSort(arr, size);
+    case 2:
+        selectionSort(arr, size);
+    }
 
     end = clock();
 

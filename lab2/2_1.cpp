@@ -36,11 +36,6 @@ int main()
         output_file << arr_bin[i] << " ";
     }
 
-    for (auto num : arr)
-    {
-        cout << num << endl;
-    }
-
     output_file.close();
 
     return 0;
