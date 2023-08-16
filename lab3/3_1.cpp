@@ -31,6 +31,7 @@ int main(int argc, char const *argv[])
     int arr[n];
     cout << "Enter elements: ";
     int comp = 0;
+
     for (int i = 0; i < n; i++)
     {
         cin >> arr[i];
