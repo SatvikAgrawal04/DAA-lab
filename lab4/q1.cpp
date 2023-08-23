@@ -5,7 +5,7 @@ using namespace std;
 // First subarray is arr[begin..mid]
 // Second subarray is arr[mid+1..end]
 void merge(int array[], int const left, int const mid,
-           int const right)
+           int const right, int *cmp)
 {
     int const subArrayOne = mid - left + 1;
     int const subArrayTwo = right - mid;
@@ -37,6 +37,7 @@ void merge(int array[], int const left, int const mid,
             indexOfSubArrayTwo++;
         }
         indexOfMergedArray++;
+        *cmp = *cmp + 1;
     }
 
     // Copy the remaining elements of
@@ -62,15 +63,15 @@ void merge(int array[], int const left, int const mid,
 
 // begin is for left index and end is right index
 // of the sub-array of arr to be sorted
-void mergeSort(int array[], int const begin, int const end)
+void mergeSort(int array[], int const begin, int const end, int *cmp)
 {
     if (begin >= end)
         return;
 
     int mid = begin + (end - begin) / 2;
-    mergeSort(array, begin, mid);
-    mergeSort(array, mid + 1, end);
-    merge(array, begin, mid, end);
+    mergeSort(array, begin, mid, cmp);
+    mergeSort(array, mid + 1, end, cmp);
+    merge(array, begin, mid, end, cmp);
 }
 
 // Driver code
@@ -100,42 +101,49 @@ MENU:
 
     printf("\nMAIN MENU (MERGE SORT)\n1. Ascending Data\n2. Descending Data\n3. Random Data\n4. EXIT\n");
     int ch;
+    int cmp;
     cin >> ch;
     switch (ch)
     {
     case 1:
-        mergeSort(arr, 0, size - 1);
+        cmp = 0;
+        mergeSort(arr, 0, size - 1, &cmp);
 
         clock_t start1, end1;
         start1 = clock();
-        mergeSort(arr, 0, size - 1);
+        mergeSort(arr, 0, size - 1, &cmp);
         end1 = clock();
 
         time_taken1 = double(end1 - start1) / CLOCKS_PER_SEC;
-        cout << "Time taken: " << fixed << setprecision(5) << time_taken1 << " seconds" << endl;
+        cout << "Time taken: " << fixed << setprecision(5) << time_taken1 << " seconds" << endl
+             << "No. of comparisions: " << cmp << endl;
         goto MENU;
 
     case 2:
-        mergeSort(arr, 0, size - 1);
+        cmp = 0;
+        mergeSort(arr, 0, size - 1, &cmp);
         reverse(arr, arr + size);
 
         clock_t start2, end2;
         start2 = clock();
-        mergeSort(arr, 0, size - 1);
+        mergeSort(arr, 0, size - 1, &cmp);
         end2 = clock();
 
         time_taken2 = double(end2 - start2) / CLOCKS_PER_SEC;
-        cout << "Time taken: " << fixed << setprecision(5) << time_taken2 << " seconds" << endl;
+        cout << "Time taken: " << fixed << setprecision(5) << time_taken2 << " seconds" << endl
+             << "No. of comparisions: " << cmp << endl;
         goto MENU;
 
     case 3:
+        cmp = 0;
         clock_t start3, end3;
         start3 = clock();
-        mergeSort(arr, 0, size - 1);
+        mergeSort(arr, 0, size - 1, &cmp);
         end3 = clock();
 
         time_taken3 = double(end3 - start3) / CLOCKS_PER_SEC;
-        cout << "Time taken: " << fixed << setprecision(5) << time_taken3 << " seconds" << endl;
+        cout << "Time taken: " << fixed << setprecision(5) << time_taken3 << " seconds" << endl
+             << "No. of comparisions: " << cmp << endl;
         goto MENU;
     case 4:
         exit(0);
